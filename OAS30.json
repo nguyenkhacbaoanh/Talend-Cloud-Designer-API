@@ -1,0 +1,168 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Customers API",
+    "description" : "An API for keeping track of your customers",
+    "contact" : {
+      "name" : "Anh NGUYEN",
+      "email" : "khacbaoanh.nguyen@gmail.com"
+    },
+    "version" : "1.0.0"
+  },
+  "paths" : {
+    "/customers" : {
+      "get" : {
+        "summary" : "Get the list of customers",
+        "description" : "Loads the list of customers",
+        "responses" : {
+          "200" : {
+            "description" : "status 200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Customers"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a customer",
+        "description" : "adds a new customer",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "status 201",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Status 409 Record could not be added",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}" : {
+      "put" : {
+        "summary" : "Update a customer",
+        "description" : "Updates a customer",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "status 200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a customer",
+        "description" : "Deletes a customer",
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Customer" : {
+        "type" : "object",
+        "required" : [ "ID" ],
+        "properties" : {
+          "ID" : {
+            "type" : "string"
+          },
+          "NAME" : {
+            "type" : "string"
+          },
+          "EMAIL" : {
+            "type" : "string"
+          },
+          "JOB_TITLE" : {
+            "type" : "string"
+          },
+          "CREDITCARDNUMBER" : {
+            "type" : "string"
+          },
+          "COMPANY" : {
+            "type" : "string"
+          },
+          "CITY" : {
+            "type" : "string"
+          },
+          "STATE" : {
+            "type" : "string"
+          }
+        },
+        "example" : "{\n    \"ID\": \"465123\",\n    \"NAME\": \"Join\",\n    \"EMAIL\": \"jsmith@visaprint.com\",\n    \"JOB_TITLE\": \"Electrical ENgineer\",\n    \"CREDITCARDNUMBER\": \"2355464625-78-4535\",\n    \"COMPANY\": \"Zoonder\",\n    \"CITY\": \"San Francisco\",\n    \"STATE\": \"CA\"\n}"
+      },
+      "Customers" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Customer"
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "required" : [ "ID" ],
+        "properties" : {
+          "ID" : {
+            "type" : "string"
+          },
+          "errorCode" : {
+            "type" : "integer",
+            "minimum" : 400
+          },
+          "errorMassage" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
